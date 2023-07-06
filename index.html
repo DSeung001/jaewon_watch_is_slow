@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>응 전역 못해</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div id="countdown"></div>
+
+<script>
+    function calculateDaysToChristmas() {
+        var today = new Date();
+        var christmas = new Date(2023,11 25);
+
+        var timeDiff = christmas.getTime() - today.getTime();
+        var daysRemaining = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+        return daysRemaining;
+    }
+
+    function calculateBrightness(days) {
+        var maxBrightness = 255;
+        var brightnessStep = maxBrightness / 365;
+        return Math.floor(maxBrightness - (days * brightnessStep));
+    }
+
+    function updateBackground() {
+        var daysToChristmas = calculateDaysToChristmas();
+        var brightness = calculateBrightness(daysToChristmas);
+        var backgroundRGB = 'rgb(' + brightness + ', ' + brightness + ', ' + brightness + ')';
+        document.body.style.backgroundColor = backgroundRGB;
+
+        if (brightness > 230){
+            document.getElementById('countdown').innerText = ' 슬슬 준비해야지?... '+daysToChristmas+"일";
+        }else{
+            document.getElementById('countdown').innerText = ' 전역까지... '+daysToChristmas+"일";
+        }
+    }
+
+    // 초기 실행
+    updateBackground();
+
+    // 매일 자정마다 배경 업데이트
+    setInterval(updateBackground, 1000 * 60 * 60 * 24);
+</script>
+</body>
+</html>
